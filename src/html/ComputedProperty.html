@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <ol>
+            <li v-for="site in sites">
+                {{site.name}}
+                <p>--- ---</p>
+            </li>
+        </ol>
+        <ol>
+            <li v-for="(value,key,index) in p1">
+                {{index}}.{{key}}:{{value}}
+                <p>--- ---</p>
+            </li>
+        </ol>
+        <ol>
+            <li v-for="n in 10">
+                {{n}}
+                <p>--- ---</p>
+            </li>
+        </ol>
+    </div>
+    <script type="text/javascript">
+    // 我们的数据对象
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Runoob!',
+            name:'Google',
+            url:'http://www.baidu.com'
+        },
+        computed: {
+            // 计算属性的 getter
+            reversedMessage: function () {
+            // `this` 指向 vm 实例
+                return this.message.split('').reverse().join('')
+            },
+            site: {
+                // getter
+                get: function () {
+                    return this.name + ' ' + this.url
+                },
+                // setter
+                set: function (newValue) {
+                    var names = newValue.split(' ')
+                    this.name = names[0]
+                    this.url = names[names.length - 1]
+                }
+            }
+        },
+        methods: {
+            reversedMessage2: function () {
+                return this.message.split('').reverse().join('')
+            }
+        }
+    })
+    </script>
+</body>
+</html>
+
+<!--
+我们可以使用 methods 来替代 computed，效果上两个都是一样的.
+但是 computed 是基于它的依赖缓存，只有相关依赖发生改变时才会重新取值。而使用 methods ，在重新渲染的时候，函数总会重新调用执行。
+可以说使用 computed 性能会更好，但是如果你不希望缓存，你可以使用 methods 属性。
+
+computed属性,默认只有getter.在需要时也可以提供setter.
+-->

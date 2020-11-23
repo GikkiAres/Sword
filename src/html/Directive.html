@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+    .active {
+        width:100px;
+        height:100px;
+        background:green;
+    }
+    .danger {
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div id="app">
+      <p>页面载入时，input 元素自动获取焦点：</p>
+      <input v-focus>
+      <div v-greetafterloaded></div>
+    </div>
+   
+     
+    <script>
+    // 注册一个全局自定义指令 v-focus
+Vue.directive('focus', {
+  // 当绑定元素插入到 DOM 中。
+  inserted: function (el) {
+    // 聚焦元素
+    el.focus()
+    // window.alert(el+"is loaded!");
+  }
+})
+
+//这个默认的是设置哪个钩子函数??
+Vue.directive('runoob', function (el, binding) {
+    // 简写方式设置文本及背景颜色
+    el.innerHTML = binding.value.text
+    el.style.backgroundColor = binding.value.color
+})
+
+// 创建根实例
+new Vue({
+  el: '#app',
+  directives: {
+    // 注册一个局部的自定义指令 v-greetafterloaded
+    greetafterloaded: {
+      bind : function(el,binding,vnode) {
+        var s = JSON.stringify
+        el.innerHTML =
+      'name: '       + s(binding.name) + '<br>' +
+      'value: '      + s(binding.value) + '<br>' +
+      'expression: ' + s(binding.expression) + '<br>' +
+      'argument: '   + s(binding.arg) + '<br>' +
+      'modifiers: '  + s(binding.modifiers) + '<br>' +
+      'vnode keys: ' + Object.keys(vnode).join(', ')
+      },
+      // 指令的定义
+      inserted: function (el) {
+        console.log("is loaded!");
+        window.alert("is loaded!");
+      }
+    }
+  }
+})
+    </script>
+</body>
+</html>
+
+<!--
+指令的本质,就是在特定的声明周期中,执行指定的动作.
+
+全局的自定义指令和局部的自定义指令.
+
+
+
+一个指令,具有几个钩子函数,我们需要做的,就是给每个钩子函数,具体的实现.
+
+钩子函数
+bind: 只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作。由框架来负责只调用了一次.
+
+inserted: 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中）。
+
+update: 被绑定元素所在的模板更新时调用，而不论绑定值是否变化。通过比较更新前后的绑定值，可以忽略不必要的模板更新（详细的钩子函数参数见下）。
+
+componentUpdated: 被绑定元素所在模板完成一次更新周期时调用。
+
+unbind: 只调用一次， 指令与元素解绑时调用。
+
+
+
+el,是元素对象本身,可以用来操作元素.
+binding,一个对象,包含以下属性
+  name: 指令名，不包括 v- 前缀。
+  value: 指令的绑定值， 例如： v-my-directive="1 + 1", value 的值是 2。
+  oldValue: 指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。
+  expression: 绑定值的表达式或变量名。 例如 v-my-directive="1 + 1" ， expression 的值是 "1 + 1"。
+  arg: 传给指令的参数。例如 v-my-directive:foo， arg 的值是 "foo"。
+  modifiers: 一个包含修饰符的对象。 例如： v-my-directive.foo.bar, 修饰符对象 modifiers 的值是 { foo: true, bar: true }。
+
+vnode,vue编译的虚拟节点
+oldVnode,上一个虚拟节点.
+-->

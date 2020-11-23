@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <ol>
+            <li v-for="site in sites">
+                {{site.name}}
+                <p>--- ---</p>
+            </li>
+        </ol>
+        <ol>
+            <li v-for="(value,key,index) in p1">
+                {{index}}.{{key}}:{{value}}
+                <p>--- ---</p>
+            </li>
+        </ol>
+        <ol>
+            <li v-for="n in 10">
+                {{n}}
+                <p>--- ---</p>
+            </li>
+        </ol>
+    </div>
+    <script type="text/javascript">
+    // 我们的数据对象
+    var vm = new Vue({
+        el: '#app',
+        data: { 
+            //存放对象数组.
+            sites:[
+                {name:'xx1'},
+                {name:'xx2'},
+                {name:'xx3'}
+            ],
+            p1:{
+                name:"GikkiAres",
+                age:20,
+                sex:"male",
+                marks:100
+            }
+        }
+    })
+ 
+
+    </script>
+</body>
+</html>
+
+<!--
+1,v-for可以遍历对象数组中的对象
+2,v-for可以遍历对象中的每一个属性.
+3,v-for可以循环整数.
+4,vue对象的属性,需要放在data中定义.
+
+-->

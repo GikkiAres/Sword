@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <p v-if="name = 'GikkAres'">欢迎主人</p>
+        <p v-if="seen2"> div2 显示</p>
+        <p v-else>div2 不显示</p>
+        <p v-if="marks < 60">不及格</p>
+        <p v-else-if="marks <80">及格</p>
+        <p v-else-if="marks <90">良好</p>
+        <p v-else-if="marks <100">优秀</p>
+        <p v-else>完美</p>
+        <p v-show="isShow">展示出来</p>
+    </div>
+    <script type="text/javascript">
+    // 我们的数据对象
+    var vm = new Vue({
+        el: '#app',
+        data: { 
+            seen:true,
+            seen2:false,
+            marks:100,
+            name:"GikkAres",
+            isShow:true
+        }
+    })
+ 
+
+    </script>
+</body>
+</html>
+
+<!--
+1,字符串常量,可以用双引号,也可以用单引号包裹.
+2,条件操作符,==和===有什么区别??
+
+-->

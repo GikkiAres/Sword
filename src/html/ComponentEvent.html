@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+    .active {
+        width:100px;
+        height:100px;
+        background:green;
+    }
+    .danger {
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div id="counter-event-example">
+          <p>{{ total }}</p>
+          <button-counter v-on:increment="incrementTotal"></button-counter>
+          <button-counter v-on:increment="incrementTotal"></button-counter>
+        </div>
+        <div>
+            <ssinput v-model="num"></ssinput>
+            <p>输入的数字为ss:{{num}}</p>
+        </div>
+        <div>
+            <base-checkbox v-model="lovingVue"></base-checkbox> 
+            <div v-show="lovingVue"> 
+                如果选择框打勾我就会显示。 
+            </div>
+        </div>
+    </div>
+
+     
+    <script>
+    var buttonCounterData = {
+        subcounter: 0
+    }
+        //子组件也可以有自己的数数据和方法.
+        //data,为什么是一个函数???
+    Vue.component('button-counter', {
+      template: '<button v-on:click="incrementHandler">{{this.subcounter}}</button>',
+      data: function () {
+        return buttonCounterData;
+      },
+      methods: {
+        incrementHandler: function () {
+          this.subcounter += 1
+          //触发increment事件.而在创建子组件时,设置了该事件的监听函数.
+          this.$emit('increment')
+        }
+      },
+    })
+
+    Vue.component('ssinput', {
+    template: `
+    <p>   <!-- 包含了名为 input 的事件 -->
+      <input
+       ref="input"
+       :para1="para" 
+       @input="$emit('input', $event.target.value)"
+      />
+    </p>
+    `,
+    props: ['para'] // 名为 value 的 prop
+    })
+
+    Vue.component('base-checkbox', {
+        model: {
+            prop: 'checked',
+            event: 'change'  // onchange 事件
+        },
+        props: {
+            checked: Boolean
+        },
+        template: `
+            <input
+            type="checkbox"
+            v-bind:checked="checked"
+            v-on:change="$emit('change', $event.target.checked)"
+            >
+        `
+    })
+
+
+    new Vue({
+      el: '#app',
+      data: {
+        total: 0,
+        num:100,
+        lovingVue: true
+      },
+      methods: {
+        incrementTotal: function () {
+          this.total += 1
+        }
+      }
+    })
+    </script>
+</body>
+</html>
+
+<!--
+父组件使用props传递数据给子组件,子组件要把数据传递回去,就需要使用自定义事件!
+可以使用v-on绑定自定义事件.
+每个Vuew实例都实现了事件接口EventsInterface.
+* 使用$on(eventName)监听事件
+* 使用$emit(eventName)触发事件.
+父组件可以在使用子组件的地方直接使用v-on来监听子组件触发的时间.
+
+
+监听子组件的原生事件:
+如果你想在子组件的根元素上监听一个原生事件。可以使用 .native 修饰 v-on 。例如：
+<my-component v-on:click.native="doTheThing"></my-component>
+
+
+子组件的data必须是一个函数
+这样的好处是每个实例可以维护一份返回对象的独立的拷贝.
+如果是一个对象,就会影响到其他的实例.
+所以如果要实现多个子控件共用一个数据,可以在这个函数中,返回一个共享的数据对象.
+
+子组件的v-model
+<input v-model="parentData">
+等价于
+<input :value="parentData" @input="parentData = $event.target.value">
+<input v-bind:value="parentData" v-on:input="parentData = $event.target.value">
+
+ <input
+       ref="input"
+       :value="value" 
+       @input="$emit('input', $event.target.value)"
+input,触发input事件,参数是, $evnet.target.value???
+value属性的值,=value?
+ref是什么??
+
+子组件使用v-model的条件:
+1,必须要有一个属性 para
+2,需要设置<element v-bind:paraxxx="para"></element>
+后面的para,表示使用了子组件的para属性. 具体的属性名,可以随意.
+3,设置input事件. 这个input事件的实现是,调用 input事件, 参数为 $event.targe.value?????
+
+
+-->

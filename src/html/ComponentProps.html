@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+    .active {
+        width:100px;
+        height:100px;
+        background:green;
+    }
+    .danger {
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <input v-model="versionName" /> <br/>
+        <span>{{versionName}}</span> <br/>
+        
+        <input v-model="versionCode" /> <br/>
+        <span>{{versionCode}}</span> <br/>
+
+        <Version v-bind:messagemessage="versionName" v-bind:versioncode="versionCode" v-bind:content="versionContent"></Version>
+        <Version messagemessage="111" versioncode="222" content="Hello,world"></Version>
+
+        <ol>
+            <todo-item v-for="item in sites" v-bind:todo="item"></todo-item>
+        </ol>
+
+    </div>
+
+    <script type="text/javascript">
+
+    Vue.component('Version',{
+        //申明子组件的属性
+        props:['messagemessage','versioncode','content'],
+        
+        //申明模板
+        template:'<h1>CurrentVersion:{{messagemessage}} ({{versioncode}}) {{content}}</h1>'
+
+    })
+
+    Vue.component('todo-item',{
+        props:['todo'],
+        template:'<li>{{todo.text}}</li>'
+    })
+
+    // 我们的数据对象
+    var vm = new Vue({
+        el: '#app',
+        data: { 
+            versionName:"0.0.0",
+            versionCode:"001",
+            versionContent:"This is the beta version",
+            sites:[
+                {text:'Runnob'},
+                {text:'Google'},
+                {text:'Taobao'}
+            ]
+        }
+    })
+    </script>
+</body>
+</html>
+
+<!--
+1,几乎任意类型的应用的界面都可以抽象为一个组件树.
+2,注册组件:
+Vue.component(tagName,options)
+调用组件:
+<tagName></tagName>
+
+3,全局组件
+所有实例都能使用全局组件.
+
+4,父组件传值给子组件
+注册时,通过props属性,申明子组件需要的属性.
+
+
+不用v-bind时,属性赋值,是一个具体的常量,但是用v-bind之后,赋值是一个变量,实际值,为变量的值.
+
+叫para2,可以,versonCde不行??
+变量名中不要有大写字母,因为h5的属性名默认都是小写的. 大写的识别不了...
+
+5,传值的类型,可以是字符串也可以是对象.
+
+6, 注意v-for的作用域,目前一个元素中使用了v-for,在这个元素的其他属性中,都能使用其中的实例.
+
+7,props的定义,除了使用字符串数组,还能使用带有验证需求的对象.
+
+-->

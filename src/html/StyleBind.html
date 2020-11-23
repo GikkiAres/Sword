@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+    .active {
+        width:100px;
+        height:100px;
+        background:green;
+    }
+    .danger {
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div id="app">
+       
+        <a v-bind:href="url" v-bind:class="{'active':isActive,'danger':hasError}">现在你看到我了</a>
+        <div :class="classObject"></div>
+    </div>
+    <script type="text/javascript">
+    // 我们的数据对象
+    var vm = new Vue({
+        el: '#app',
+        data: { 
+            url:'http://www.baidu.com',
+            isActive:true,
+            hasError:true,
+            classObject:{
+                active:true,
+                danger:true
+            }
+        }
+    })
+ 
+
+    </script>
+</body>
+</html>
+
+<!--
+<a v-bind:param="url"> </a>
+将a元素的param属性和url进行绑定.
+可以缩写为:
+<a :param="url"> </a>
+ //1个元素可以有多个class
+
+classObject的使用还是比较灵活的.
+
+
+
+-->

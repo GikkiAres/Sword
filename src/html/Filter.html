@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+	<script src="../js/vue2.6.12.js"></script>
+</head>
+<style>
+    .class1 {
+      background: #444;
+      color: #eee;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <p>{{ message | captialize }}</p>
+       
+    </div>
+    <script type="text/javascript">
+    // 我们的数据对象
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Runoob!'
+        },
+        methods: {
+            captialize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            }
+        }
+    })
+    </script>
+</body>
+</html>
+
+<!--
+双向数据绑定,是指和UI界面元素的内部变量和我们定义的变量var进行双向数据绑定.
+当var变化时,UI界面的显示会进行变化,即其内部变量发生改变.
+当我们改变了UI界面的显示值时,即其内部变量改变时,我们的变量var的值也会发生改变.
+
+-->
