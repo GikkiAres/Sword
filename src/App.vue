@@ -1,19 +1,37 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <header>
+      Sword
+    </header>
+
+    <div>
+      <router-view></router-view>
+    </div>
+
+    <footer>
+      <div class="wrap">
+        <div>Author:GikkiAres</div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
+window.console.log("App.vue");
+
 export default {
-  name: 'App'
-}
+  name: "App",
+  data() {
+    return {
+      mb_isUseDatabase: false,
+    };
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
